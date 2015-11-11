@@ -43,6 +43,7 @@
     <Compile Include="public\js\angular\angular.js" />
     <Compile Include="public\js\angular\ngAutocomplete.js" />
     <Compile Include="public\js\controllers\board.js" />
+    <Compile Include="public\js\facebookAPI\facebookconnect.js" />
     <Compile Include="public\js\filter.js" />
     <Compile Include="public\js\jquery\jquery-1.11.3.min.js" />
     <Compile Include="public\js\jquery\jquery.mobile-1.4.5.min.js" />
@@ -81,6 +82,7 @@
     <Folder Include="public\js\angular\" />
     <Folder Include="public\js\jquery\" />
     <Folder Include="public\js\controllers\" />
+    <Folder Include="public\js\facebookAPI\" />
     <Folder Include="public\stylesheets\" />
     <Folder Include="public\templates\" />
     <Folder Include="routes\" />
