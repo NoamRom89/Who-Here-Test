@@ -66,21 +66,6 @@ window.fbAsyncInit = function () {
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-var facebookLogin = function (callback) {
-    FB.login(function (response) {
-        // handle the response
-        if (response.status === 'connected') {
-            // Logged into your app and Facebook.
-            makeApiCalls(callback);
-        } else if (response.status === 'not_authorized') {
-    // The person is logged into Facebook, but not your app.
-            console.log("ERROR, user is not authorized! ");
-        } else {
-    // The person is not logged into Facebook, so we're not sure if
-    // they are logged into this app or not.
-        }
-    }, { scope: 'public_profile,email,user_friends,user_hometown,user_location,user_birthday' });
-}
 
 var makeApiCalls = function (callback) {
     console.log('Welcome!  Fetching your information.... ');
@@ -98,3 +83,20 @@ var makeApiCalls = function (callback) {
        });
     });
 }
+
+var facebookLogin = function (callback) {
+    FB.login(function (response) {
+        // handle the response
+        if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            makeApiCalls(callback);
+        } else if (response.status === 'not_authorized') {
+    // The person is logged into Facebook, but not your app.
+            console.log("ERROR, user is not authorized! ");
+        } else {
+    // The person is not logged into Facebook, so we're not sure if
+    // they are logged into this app or not.
+        }
+    }, { scope: 'public_profile,email,user_friends,user_hometown,user_location,user_birthday' });
+}
+
