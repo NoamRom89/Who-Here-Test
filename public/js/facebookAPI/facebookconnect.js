@@ -32,7 +32,7 @@ function checkLoginState() {
 
 window.fbAsyncInit = function () {
     FB.init({
-        appId      : '{your-app-id}',
+        appId      : '999591500097903',
         cookie     : true,  // enable cookies to allow the server to access 
         // the session
         xfbml      : true,  // parse social plugins on this page
@@ -66,6 +66,23 @@ window.fbAsyncInit = function () {
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
+var makeApiCalls = function (callback) {
+    console.log('Welcome!  Fetching your information.... ');
+    var friendList = [];
+    FB.api('/me', function (response) {
+        console.log('response (USER): ', response);
+        USER = response;
+        FB.api('/' + response.id + '/picture?height=200', function (mediumResponse) {
+            USER.mediumProfilePicture = mediumResponse.data.url;
+            FB.api('/me/friends?fields=id,name,gender,picture{url},hometown,work', function (response) {
+                console.log('response (friendsList): ', response);
+                friendList = response;
+                callback(friendList);
+            });
+        });
+    });
+}
+
 var facebookLogin = function (callback) {
     FB.login(function (response) {
         // handle the response
@@ -82,19 +99,3 @@ var facebookLogin = function (callback) {
     }, { scope: 'public_profile,email,user_friends,user_hometown,user_location,user_birthday' });
 }
 
-var makeApiCalls = function (callback) {
-    console.log('Welcome!  Fetching your information.... ');
-    var friendList = [];
-    FB.api('/me', function (response) {
-        console.log('response (USER): ', response);
-        USER = response;
-        FB.api('/' + response.id + '/picture?height=200', function (mediumResponse) {
-           USER.mediumProfilePicture = mediumResponse.data.url;
-           FB.api('/me/friends?fields=id,name,gender,picture{url},hometown,work', function (response) {
-             console.log('response (friendsList): ', response);
-               friendList = response;
-               callback(friendList);
-           });
-       });
-    });
-}
