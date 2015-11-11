@@ -1,6 +1,7 @@
 ﻿var express = require('express');
 var router = express.Router();
 var usersDB = require("../database/users/db.user");
+var fbUser = require("../database/facebookUser/db.facebookUser");
 var statusEnum = require("../enum/status");
 var logDB = require('../database/logs/db.log');
 var updatedData = require('../logic/updatedData');
@@ -61,6 +62,17 @@ router.post('/api/getPopulateLog', function (req, res) {
     });
 
 });
+
+
+//Insert facebook user
+router.post('/api/userInsert', function (req, res) {
+    console.log('api/userInsert');
+    fbUser.addUser(req.body.user, function (newUser) {
+        // Callback function.
+        res.json(newUser);
+    });
+});
+
 
 
 module.exports = router;

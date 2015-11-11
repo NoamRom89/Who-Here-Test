@@ -185,6 +185,8 @@
         background-color: gray;
         background-image: repeating-linear-gradient(40deg, transparent 17px, rgba(222,222,222,1) 0px, rgba(236,240,241,1) 32px);
     }
+
+    /*************************************       Login design     ************************************************/
     .login { 
     height: 147px;
     width: 30%;
@@ -231,6 +233,37 @@
     display: list-item;
     margin-top: 40px;
     margin-left: 248px;
+    }
+
+    /****************************** Facebook login design   ***********************************/
+    @import url(http://fonts.googleapis.com/css?family=Merriweather+Sans);
+     div.social-wrap button {
+         margin-left:930px;
+         margin-top:50px;
+        padding-right: 45px;
+        height: 35px;
+        background: none;
+        border: none;
+        display: block;
+        background-size: 35px 35px;
+        background-position: right center;
+        background-repeat: no-repeat;
+        border-radius: 4px;
+        color: white;
+        font-family:"Merriweather Sans", sans-serif;
+        font-size: 14px;
+        margin-bottom: 15px;
+        width: 205px;
+        border-bottom: 2px solid transparent;
+        border-left: 1px solid transparent;
+        border-right: 1px solid transparent;
+        box-shadow: 0 4px 2px -2px gray;
+        text-shadow: rgba(0, 0, 0, .5) -1px -1px 0;
+    }
+    button#facebook {
+        border-color: #2d5073;
+        background-color: #3b5998;
+        background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
     }
 
     
@@ -412,6 +445,8 @@
         background-image: repeating-linear-gradient(40deg, transparent 17px, rgba(222,222,222,1) 0px, rgba(236,240,241,1) 32px);
     }
 
+
+    /*************************************       Login design     ************************************************/
     #loginPagePic{
         background-image: url("../images/portal-logo.png");
         width: 12px;
@@ -553,3 +588,7 @@ table tr th, td{
     margin-left: 10px !important;
     margin-top: 10px !important;
 }
+
+
+
+

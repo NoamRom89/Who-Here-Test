@@ -1,4 +1,8 @@
-﻿var bulletinApp = angular.module('bulletinApp', ['ngRoute']);
+﻿var BASE_URL = "https://who-here-test.herokuapp.com";
+
+var USER = null;
+
+var bulletinApp = angular.module('bulletinApp', ['ngRoute']);
 
 
 
@@ -19,7 +23,7 @@ bulletinApp.config(['$routeProvider', '$locationProvider', function ($routeProvi
 
 
 
-/**     Controllers    **/
+                 /**     Controllers    **/
 
 
 /*************************  Board    ********************************/
@@ -27,12 +31,59 @@ bulletinApp.config(['$routeProvider', '$locationProvider', function ($routeProvi
 
 bulletinApp.controller('bulletinCntrl', function ($scope, $rootScope, $http, $location) {
     
-    $scope.users = {};
+    $scope.connectedUser = {};
+    
 
+    //facebook login
+    $scope.facebookInsert = function (){
+        $scope.friendList = [];
+        facebookLogin(function (friendList) {
+            delete friendList['paging'];
+            delete friendList['summary'];
+            friendList.data.forEach(function (friend) {
+                friend.profilePicture = friend.picture.data.url
+                friend.bigProfilePicture = 'https://graph.facebook.com/' + friend.id + '/picture?height=215&width=215';
+                delete friend['picture'];
+            });
+            
+            USER.isNew = true;
+            USER.friendsList = friendList.data;
+            console.log('BASE_URL', BASE_URL);
+
+            $http.post(BASE_URL + '/api/userInsert', { user: USER }).
+                  success(function (data, status, headers, config) {
+                // this callback will be called asynchronously
+                // when the response is available
+                // if user has signed up or not
+                if (data == null) {
+                    console.log("date == null!!!!!");
+                    $location.path('login');
+                } else {
+                    $scope.connectedUser = data;
+                    console.log('$scope.connectedUser', $scope.connectedUser);
+                    $scope.changeURL('board');
+                }
+
+            }).
+                  error(function (data, status, headers, config) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                console.log('Error : data', data);
+                console.log('Error : status', status);
+                console.log('Error : headers', headers);
+                console.log('Error : config', config);
+                // Redirect user back to login page
+                $location.path('signup');
+            });
+        });
+    }
+    
+    
+    $scope.users = {};
     $scope.calendar = {
         value : moment()
     }
-
+    
     $scope.getDateFormat = function () {
         if (!$scope.calendar.value)
             return null;
@@ -40,7 +91,7 @@ bulletinApp.controller('bulletinCntrl', function ($scope, $rootScope, $http, $lo
         // if format already exists. return calendar.value
         return moment($scope.calendar.value).format("DD/MM/YYYY");
     }
-
+    
     $scope.changeDate = function () {
         
         console.log("changeDate - $scope.calendar.value: ", $scope.calendar.value);
@@ -52,6 +103,7 @@ bulletinApp.controller('bulletinCntrl', function ($scope, $rootScope, $http, $lo
     $scope.changeURL = function (url) {
         $location.path(url);
     };
+    
     
     $(document).ready(function () {
         

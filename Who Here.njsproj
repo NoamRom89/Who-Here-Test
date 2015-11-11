@@ -32,6 +32,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="database\facebookUser\db.facebookUser.js" />
+    <Compile Include="database\facebookUser\db.facebookUserSchema.js" />
     <Compile Include="database\users\db.user.js" />
     <Compile Include="enum\status.js" />
     <Compile Include="logic\updatedData.js" />
@@ -73,6 +75,7 @@
     <Folder Include="bin\" />
     <Folder Include="database\" />
     <Folder Include="database\logs\" />
+    <Folder Include="database\facebookUser\" />
     <Folder Include="database\users\" />
     <Folder Include="enum\" />
     <Folder Include="logic\" />

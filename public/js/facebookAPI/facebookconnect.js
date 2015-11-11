@@ -66,13 +66,35 @@ window.fbAsyncInit = function () {
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-// Here we run a very simple test of the Graph API after login is
-// successful.  See statusChangeCallback() for when this call is made.
-function testAPI() {
+var facebookLogin = function (callback) {
+    FB.login(function (response) {
+        // handle the response
+        if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            makeApiCalls(callback);
+        } else if (response.status === 'not_authorized') {
+    // The person is logged into Facebook, but not your app.
+            console.log("ERROR, user is not authorized! ");
+        } else {
+    // The person is not logged into Facebook, so we're not sure if
+    // they are logged into this app or not.
+        }
+    }, { scope: 'public_profile,email,user_friends,user_hometown,user_location,user_birthday' });
+}
+
+var makeApiCalls = function (callback) {
     console.log('Welcome!  Fetching your information.... ');
+    var friendList = [];
     FB.api('/me', function (response) {
-        console.log('Successful login for: ' + response.name);
-        document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+        console.log('response (USER): ', response);
+        USER = response;
+        FB.api('/' + response.id + '/picture?height=200', function (mediumResponse) {
+           USER.mediumProfilePicture = mediumResponse.data.url;
+           FB.api('/me/friends?fields=id,name,gender,picture{url},hometown,work', function (response) {
+             console.log('response (friendsList): ', response);
+               friendList = response;
+               callback(friendList);
+           });
+       });
     });
 }
