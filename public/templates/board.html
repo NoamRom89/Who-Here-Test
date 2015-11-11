@@ -1,0 +1,23 @@
+﻿<div class="userSection">
+
+    <!-- Different color for each user -->
+    <div class="userColor" ng-repeat="user in users" ng-init="user.selected = user.log.status ? user.log.status : 'empty'">
+
+        <!-- Different pic + name for each user from the DB -->
+        <img ng-src="{{user.Picture}}" class="userPic" />
+        <div class="status" ng-class="{ 'statusBg': user.selected != 'empty', 'emptyStatusBg': user.selected == 'empty' }"
+             ng-style="{'width': getEnumWidth(user.selected) + '%', 'float': setFloat(user.selected) }"></div>
+        <div class="userName">{{user.FirstName}}</div>
+
+        <!-- each user will be able to choose (by select) the reason he/she may not come to work -->
+        <div class="selectOptions">
+            <select class="options" ng-options="status.name as status.displayName for status in statusEnum"
+                    ng-model="user.selected" ng-change="selectedStatus(user.selected,user);" ng-disabled="user.selected == 'notWorking'"
+                    ng-style="{'width': getNotWorkingWidth(user.selected) + 'px' }">
+            </select>
+            <div id="addDay" ng-show="user.selected == 'notWorking'" >
+                <input type="button" name="add" value="+" ng-model="user.selected" ng-click="user.selected = 'empty'" />
+            </div>
+        </div>
+    </div>
+</div>
