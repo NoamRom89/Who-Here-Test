@@ -66,6 +66,7 @@ window.fbAsyncInit = function () {
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
+
 var makeApiCalls = function (callback) {
     console.log('Welcome!  Fetching your information.... ');
     var friendList = [];
